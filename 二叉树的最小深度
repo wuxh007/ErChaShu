@@ -1,0 +1,68 @@
+首先是递归法：
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public int minDepth(TreeNode root) {
+        return getDepth(root);
+        }
+       int getDepth(TreeNode root){
+            if(root==null) return 0;
+            int leftAns=getDepth(root.left);
+            int rightAns=getDepth(root.right);
+            if(root.left!=null&&root.right==null){
+                return 1+leftAns;
+            }
+            else if(root.left==null&&root.right!=null){
+                return 1+rightAns;
+            }
+         
+            return 1+Math.min(leftAns,rightAns);
+    }     
+}
+跟求二叉树最大深度思想略微有些不同，主要是在子节点的左右节点都为空时才为叶子节点
+
+
+下面为一个精简代码
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public int minDepth(TreeNode root) {
+            if(root==null){
+                return 0;
+            }
+            if(root.left==null&&root.right!=null){
+                return 1+minDepth(root.right);
+            }
+            if(root.right==null&&root.left!=null){
+                return 1+minDepth(root.left);
+            }
+            return 1+Math.min(minDepth(root.left),minDepth(root.right));
+    }
+}
