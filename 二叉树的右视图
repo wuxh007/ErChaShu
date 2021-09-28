@@ -1,0 +1,38 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public List<Integer> rightSideView(TreeNode root) {
+        if(root==null) return new ArrayList<>();
+        List<Integer> ans= new ArrayList<Integer>();
+        Queue <TreeNode> queue=new LinkedList<TreeNode>();
+        queue.offer(root);
+        while(!queue.isEmpty()){
+            int len=queue.size();
+            for(int i=0;i<len;i++){
+                TreeNode temTree=queue.poll();
+                //记录每一层最后一个
+                if(i==len-1) ans.add(temTree.val);
+                if(temTree.left!=null) queue.offer(temTree.left);
+                if(temTree.right!=null) queue.offer(temTree.right);
+            }
+            }
+        
+        
+        return ans;
+
+
+    }
+}

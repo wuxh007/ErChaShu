@@ -1,0 +1,42 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public List<List<Integer>> levelOrder(TreeNode root) {
+        if(root==null) return new ArrayList<List<Integer>>();
+
+        Queue<TreeNode> quene=new LinkedList<TreeNode>();
+        quene.offer(root);
+        List <List<Integer>> ans=new ArrayList<List<Integer>>();
+
+        while(!quene.isEmpty()){
+            List<Integer> itemList=new ArrayList<Integer>();
+            int len=quene.size();
+            while(len>0){
+                TreeNode tmpNode=quene.poll();//不违反容量限制的情况下立即执行，则将指定的元素插入到此队列中
+                itemList.add(tmpNode.val);
+                if(tmpNode.left!=null) quene.offer(tmpNode.left);
+                //不违反容量限制的情况下立即执行，则将指定的元素插入到此队列中
+                if(tmpNode.right!=null) quene.offer(tmpNode.right);
+                len--;
+
+            }
+            ans.add(itemList);
+
+        }
+
+return ans;
+    }
+}
