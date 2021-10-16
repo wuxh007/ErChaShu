@@ -41,3 +41,44 @@ class Solution {
 
     }
 }
+
+
+
+从前序和中序遍历构造二叉树
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public TreeNode buildTree(int[] preorder, int[] inorder) {
+            return helper(preorder,0,preorder.length-1,inorder,0,inorder.length-1);
+    }
+    public TreeNode helper(int[] preorder,int preLeft,int preRight,int []inorder,int inLeft,int inRight){
+        if(inLeft>inRight||preLeft>preRight) return null;
+
+        int idx=inLeft;
+        int val=preorder[preLeft];
+        TreeNode root=new TreeNode(val);
+        for(int i=inLeft;i<=inRight;i++){
+            if(inorder[i]==val){
+                idx=i;
+                break;
+            }
+        }
+        root.left=helper(preorder,preLeft+1,preLeft+(idx-inLeft),inorder,inLeft,idx-1);
+        root.right=helper(preorder,preLeft+(idx-inLeft)+1,preRight,inorder,idx+1,inRight);
+        return root;
+    }
+}
