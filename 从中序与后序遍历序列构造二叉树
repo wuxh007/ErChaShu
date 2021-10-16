@@ -1,0 +1,43 @@
+已知一个二叉树的中序与后序排列，，构造该二叉树：
+
+
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public TreeNode buildTree(int[] inorder, int[] postorder) {
+        return buildTree1(inorder,0,inorder.length,postorder,0,postorder.length);
+
+    }
+    public TreeNode buildTree1(int [] inorder,int inLeft,int inRight,int[] postorder,int postLeft,int postRight){
+        if(inRight-inLeft<1) return null;
+
+        if(inRight-inLeft==1) return new TreeNode(inorder[inLeft]);
+
+        int rootVal=postorder[postRight-1];
+        TreeNode root=new TreeNode(rootVal);
+        int rootIndex=0;
+
+        for(int i=inLeft;i<inRight;i++){
+            if(inorder[i]==rootVal) rootIndex=i;
+        }
+
+        root.left=buildTree1(inorder,inLeft,rootIndex,postorder,postLeft,postLeft+(rootIndex-inLeft));
+        root.right=buildTree1(inorder,rootIndex+1,inRight,postorder,postLeft+(rootIndex-inLeft),postRight-1);
+        return root;
+
+    }
+}
