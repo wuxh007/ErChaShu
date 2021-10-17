@@ -1,0 +1,65 @@
+给定二叉搜索树（BST）的根节点和一个值。 你需要在BST中找到节点值等于给定值的节点。 返回以该节点为根的子树。 如果节点不存在，则返回 NULL。
+
+例如，
+
+
+
+递归：刚开始思路很正确，就是ac不出来，后来一步步看别人的代码  这一行：： if(root==null ||root.val==val )return root;
+以前是   if( root.val==val|| root==null)return root;，颠倒顺序后直接成功
+原来Java也不是那么聪明。还得小心谨慎使用
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public TreeNode searchBST(TreeNode root, int val) {
+          if(root==null ||root.val==val )return root;
+    
+        if(root.val<val) return searchBST(root.right,val); 
+    
+        else if(root.val>val) return searchBST(root.left,val); 
+        else return null;
+          
+    }
+}
+迭代：刚开始想使用栈或者队列模拟遍历，但是考虑二叉搜索树比较特殊，节点是有序的，因此可以根据节点大小与目标值的大小判断方向：
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public TreeNode searchBST(TreeNode root, int val) {
+          while(root!=null){
+              if(root.val>val) root=root.left;
+              else if(root.val<val )root=root.right;
+              else return root;
+          }
+         return null;
+        
+
+      
+    }
+}
