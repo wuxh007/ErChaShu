@@ -56,5 +56,49 @@ class Solution {
 
 
 迭代：
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public TreeNode deleteNode(TreeNode root, int key) {
+        if(root==null) return root;
+        TreeNode cur=root;
+        TreeNode pre=null;
+        while(cur!=null){
+            if(cur.val==key) break;
+            pre=cur;
+            if(cur.val>key) cur=cur.left;
+            else cur=cur.right;
+        }
 
+        if(pre==null) return find(cur);
+        if(pre.left!=null&&pre.left.val==key) pre.left=find(cur);
+        if(pre.right!=null&&pre.right.val==key) pre.right=find(cur);
+        return root;
+
+    }
+    private TreeNode find(TreeNode target){
+        if(target==null) return target;
+        if(target.right==null) return target.left;
+        TreeNode cur=target.right;
+        while(cur.left!=null){
+            cur=cur.left;
+        }
+        cur.left=target.left;
+        return target.right;
+
+    }
+}
 
